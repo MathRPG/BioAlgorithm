@@ -1,6 +1,7 @@
 #include <iostream>
 
-#include "bio.h"
+#include "NeedlemanWunsch.h"
+#include "SmithWaterman.h"
 
 int main()
 {
