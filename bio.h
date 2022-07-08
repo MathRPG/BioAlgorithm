@@ -79,9 +79,9 @@ namespace bio
 			: AlignmentAlgorithm(s1, s2, w)
 		{
 			for (int i = 0; i < seq1.length(); ++i)
-				m[i][0] = -i;
-			for (int i = 0; i < seq2.length(); ++i)
-				m[0][i] = -i;
+				m[i][0] = i * w.gap;
+			for (int j = 0; j < seq2.length(); ++j)
+				m[0][j] = j * w.gap;
 		}
 	};
 
