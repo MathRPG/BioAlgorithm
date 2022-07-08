@@ -3,4 +3,4 @@ project(BioAlgorithm)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(BioAlgorithm main.cpp Algorithm.cpp)
+add_executable(BioAlgorithm main.cpp Algorithm.cpp File.cpp)

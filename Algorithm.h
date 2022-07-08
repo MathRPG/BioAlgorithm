@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "Weights.h"
-#include "Result.h"z
+#include "Result.h"
 
 namespace bio
 {

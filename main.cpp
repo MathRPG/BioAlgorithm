@@ -1,5 +1,7 @@
+#include <fstream>
 #include <iostream>
 
+#include "File.h"
 #include "NeedlemanWunsch.h"
 #include "SmithWaterman.h"
 
@@ -25,15 +27,21 @@ int main()
 //	std::cout << "Score: " << res2 << '\n';
 //	std::cout << "Exmplo Professor";
 
-	bio::NeedlemanWunsch alg_needle("GGATCGA", "GAATTCAGTTA", { .match = +5, .mismatch = -3, .gap = -4 });
-	bio::Result result_needle = alg_needle.run_algorithm();
-	alg_needle.print_matrix(std::cout);
-	std::cout << "Score: " << result_needle << '\n';
+	auto sequences = bio::FastaFileReader("../sequences.fasta").read_sequences();
 
-	bio::SmithWaterman alg_smith("GGATCGA", "GAATTCAGTTA", { .match = +5, .mismatch = -3, .gap = -4 });
-	bio::Result result_smith = alg_smith.run_algorithm();
-	alg_smith.print_matrix(std::cout);
-	std::cout << "Score: " << result_smith << '\n';
+	for (const auto& s : sequences)
+		std::cout << s << '\n';
+	std::cout << "End!" << '\n';
+
+//	bio::NeedlemanWunsch alg_needle("GGATCGA", "GAATTCAGTTA", { .match = +5, .mismatch = -3, .gap = -4 });
+//	bio::Result result_needle = alg_needle.run_algorithm();
+//	alg_needle.print_matrix(std::cout);
+//	std::cout << "Score: " << result_needle << '\n';
+//
+//	bio::SmithWaterman alg_smith("GGATCGA", "GAATTCAGTTA", { .match = +5, .mismatch = -3, .gap = -4 });
+//	bio::Result result_smith = alg_smith.run_algorithm();
+//	alg_smith.print_matrix(std::cout);
+//	std::cout << "Score: " << result_smith << '\n';
 
 	return 0;
 }
