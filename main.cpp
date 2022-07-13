@@ -27,11 +27,15 @@ int main()
 //	std::cout << "Score: " << res2 << '\n';
 //	std::cout << "Exmplo Professor";
 
-	auto sequences = bio::FastaFileReader("../sequences.fasta").read_sequences();
+	auto sequences = bio::FastaFileReader("../teacher_seq.fasta").read_sequences();
 
 	for (const auto& s : sequences)
 		std::cout << s << '\n';
 	std::cout << "End!" << '\n';
+
+	bio::NeedlemanWunsch alg_needle(sequences[1], sequences[0], { .match = +5, .mismatch = -3, .gap = -4 });
+	bio::Result result = alg_needle.run_algorithm();
+	std::cout << "Score: " << result << '\n';
 
 //	bio::NeedlemanWunsch alg_needle("GGATCGA", "GAATTCAGTTA", { .match = +5, .mismatch = -3, .gap = -4 });
 //	bio::Result result_needle = alg_needle.run_algorithm();

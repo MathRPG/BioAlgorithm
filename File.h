@@ -10,6 +10,7 @@ namespace bio
 	class FastaFileReader
 	{
 		std::ifstream file;
+		std::string get_next_sequence();
 	 public:
 		explicit FastaFileReader(const std::string& filename);
 		[[nodiscard]] std::vector<std::string> read_sequences();

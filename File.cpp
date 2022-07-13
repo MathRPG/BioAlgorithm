@@ -17,33 +17,41 @@ namespace bio
 		}
 	}
 
-	vector<string> FastaFileReader::read_sequences()
+	string FastaFileReader::get_next_sequence()
 	{
-		vector<string> v;
+		string sequence;
 
-		string line;
-		string cur_seq;
-
-		while (std::getline(file, line).good())
+		while (true)
 		{
+			string line;
+
+			if (!std::getline(file, line).good())
+				return sequence;
+
 			if (line.empty())
 				continue;
 
 			if (line[0] == '>')
-			{
-				if (!cur_seq.empty())
-					v.push_back(cur_seq);
+				return sequence;
 
-				cur_seq.clear();
-				continue;
-			}
-
-			cur_seq += line;
+			sequence += line;
 		}
+	}
 
-		// Last sequence not pushed yet
-		v.push_back(cur_seq);
+	vector<string> FastaFileReader::read_sequences()
+	{
+		vector<string> seqs;
 
-		return v;
+		get_next_sequence(); // Discard first empty sequence
+
+		while (true)
+		{
+			string sequence = get_next_sequence();
+
+			if (sequence.empty())
+				return seqs;
+
+			seqs.push_back(sequence);
+		}
 	}
 }
