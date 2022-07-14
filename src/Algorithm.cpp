@@ -2,14 +2,14 @@
 #include <iomanip>
 #include <string>
 
-#include "Algorithm.h"
-#include "Result.h"
+#include "../include/Algorithm.h"
+#include "../include/Alignment.h"
 
 namespace bio
 {
 	using std::string;
 
-	Result Algorithm::traceback() const
+	Alignment Algorithm::traceback() const
 	{
 		const auto alignment_size = std::max(seq1.length(), seq2.length());
 

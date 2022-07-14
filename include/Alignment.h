@@ -1,20 +1,20 @@
-#ifndef _RESULT_H_
-#define _RESULT_H_
+#ifndef _ALIGNMENT_H_
+#define _ALIGNMENT_H_
 
 #include <string>
 #include <iostream>
 
 namespace bio
 {
-	struct Result
+	struct Alignment
 	{
 		const int score;
 		std::string aligned_seq1;
 		std::string aligned_seq2;
 
-		friend std::ostream& operator<<(std::ostream& out, const Result& self)
+		friend std::ostream& operator<<(std::ostream& out, const Alignment& self)
 		{
-			out << self.score << '\n';
+			out << "Score: " << self.score << '\n';
 			out << self.aligned_seq1 << '\n';
 			out << std::string(self.aligned_seq1.length(), '|') << '\n';
 			out << self.aligned_seq2 << '\n';

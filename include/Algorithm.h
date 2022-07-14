@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "Weights.h"
-#include "Result.h"
+#include "Alignment.h"
 
 namespace bio
 {
@@ -33,7 +33,7 @@ namespace bio
 			return m[i][j];
 		};
 
-		[[nodiscard]] Result traceback() const;
+		[[nodiscard]] Alignment traceback() const;
 
 	 protected:
 		std::string seq1;
@@ -66,7 +66,7 @@ namespace bio
 
 		virtual ~Algorithm() = default;
 
-		virtual Result run_algorithm()
+		virtual Alignment run_algorithm()
 		{
 			for (int i = 1; i < seq1.length(); ++i)
 			{
