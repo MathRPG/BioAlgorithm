@@ -1,3 +1,4 @@
+#include <chrono>
 #include <iostream>
 #include <memory>
 
@@ -108,6 +109,8 @@ void show_usage(const char* program_name)
 
 int main(const int argc, const char* argv[])
 {
+	auto clock_start = std::chrono::high_resolution_clock::now();
+
 	const char* const program_name = argv[0];
 
 	args::Parser p;
@@ -135,14 +138,22 @@ int main(const int argc, const char* argv[])
 
 	std::cout << "Running Algorithm...\n";
 
+	// TODO: Weights from command line
 	auto aligner = make_instance(p.algorithm, sequences[0], sequences[1], { +3, -3, -4 });
 	auto alignment = aligner->run_algorithm();
 
 	if (p.show_matrix)
 		aligner->print_matrix(std::cout);
 
+	// TODO: Better way of showing alignment
 	if (p.show_alignment)
 		std::cout << alignment;
+
+	auto clock_end = std::chrono::high_resolution_clock::now();
+
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(clock_end - clock_start);
+
+	std::cout << "Execution time: " << duration.count() << "ms\n";
 
 	return 0;
 }

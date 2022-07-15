@@ -3,7 +3,19 @@
 #include <string>
 
 #include "../include/Algorithm.h"
-#include "../include/Alignment.h"
+
+static std::string str_with_capacity(const unsigned long capacity)
+{
+	std::string str;
+	str.reserve(capacity);
+	return str;
+}
+
+static const std::string& reversed_str(std::string& str)
+{
+	std::reverse(str.begin(), str.end());
+	return str;
+}
 
 namespace bio
 {
@@ -13,11 +25,8 @@ namespace bio
 	{
 		const auto alignment_size = std::max(seq1.length(), seq2.length());
 
-		std::string aligned1;
-		aligned1.reserve(alignment_size);
-
-		std::string aligned2;
-		aligned2.reserve(alignment_size);
+		auto aligned1 = str_with_capacity(alignment_size);
+		auto aligned2 = str_with_capacity(alignment_size);
 
 		for (auto [i, j] = traceback_start(); !should_stop_traceback(i, j);)
 		{
@@ -45,10 +54,11 @@ namespace bio
 			j--;
 		}
 
-		std::reverse(aligned1.begin(), aligned1.end());
-		std::reverse(aligned2.begin(), aligned2.end());
-
-		return { get_max_score(), aligned1, aligned2 };
+		return {
+			get_max_score(),
+			reversed_str(aligned1),
+			reversed_str(aligned2)
+		};
 	}
 
 	void Algorithm::print_matrix(std::ostream& out) const

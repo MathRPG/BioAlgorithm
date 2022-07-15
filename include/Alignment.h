@@ -9,8 +9,8 @@ namespace bio
 	struct Alignment
 	{
 		const int score;
-		std::string aligned_seq1;
-		std::string aligned_seq2;
+		const std::string aligned_seq1;
+		const std::string aligned_seq2;
 
 		friend std::ostream& operator<<(std::ostream& out, const Alignment& self)
 		{

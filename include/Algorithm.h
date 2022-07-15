@@ -82,7 +82,6 @@ namespace bio
 
 		void print_matrix(std::ostream& out) const;
 	};
-
 }
 
 #endif
