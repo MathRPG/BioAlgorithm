@@ -12,39 +12,50 @@ namespace bio
 		const std::string aligned_seq1;
 		const std::string aligned_seq2;
 
-		friend std::ostream& operator<<(std::ostream& out, const Alignment& self)
+		[[nodiscard]] bool has_gap_at_index(const int i) const
 		{
-			out << "Score: " << self.score << '\n';
-			out << self.aligned_seq1 << '\n';
-			out << std::string(self.aligned_seq1.length(), '|') << '\n';
-			out << self.aligned_seq2 << '\n';
-			return out;
+			return aligned_seq1[i] == '-' || aligned_seq2[i] == '-';
+		}
+
+		[[nodiscard]] bool has_match_at_index(const int i) const
+		{
+			return aligned_seq1[i] == aligned_seq2[i];
+		}
+
+		[[nodiscard]] std::string make_divider(const int i) const
+		{
+			std::string divider;
+			divider.reserve(CHARS_PER_LINE);
+
+			for (int j = i; j < i + CHARS_PER_LINE && j < aligned_seq1.length(); ++j)
+			{
+				if (has_gap_at_index(j))
+					divider += ' ';
+				else if (has_match_at_index(j))
+					divider += '|';
+				else
+					divider += '.';
+			}
+
+			return divider;
+		}
+
+		void pretty_print_from_index(const int i, std::ostream& out) const
+		{
+			out << '\n';
+			out << aligned_seq1.substr(i, CHARS_PER_LINE) << '\n';
+			out << make_divider(i) << '\n';
+			out << aligned_seq2.substr(i, CHARS_PER_LINE) << '\n';
 		}
 
 		void pretty_print(std::ostream& out) const
 		{
-			const auto len = this->aligned_seq1.length();
-			auto cur = 0;
+			out << "Score: " << this->score << '\n';
 
-			while (true)
-			{
-				auto last_cur = cur;
+			for (auto i = 0; i < aligned_seq1.length(); i += CHARS_PER_LINE)
+				pretty_print_from_index(i, out);
 
-				for (auto const& s : { aligned_seq1, aligned_seq2 })
-				{
-					for (auto i = cur; i < last_cur + CHARS_PER_LINE && i < len; ++i)
-					{
-						out << s[i];
-					}
-					out << '\n';
-				}
-				out << '\n';
-
-				cur += CHARS_PER_LINE;
-
-				if (cur >= len)
-					break;
-			}
+			out << '\n';
 		}
 
 	 private:
